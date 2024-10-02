@@ -1,6 +1,9 @@
 ﻿using Contracts;
 using Entities.Dto;
 using Entities.Models;
+using Microsoft.EntityFrameworkCore;
+using System.Linq;
+using System.Net;
 
 namespace Service
 {
@@ -83,12 +86,6 @@ namespace Service
 
             var refreshToken = _tokenService.CreateRefreshToken();
 
-            var tokens = new LoginTokensDto()
-            {
-                access = _tokenService.CreateAccessToken(credentials.player_id),
-                refresh = refreshToken.Token,
-            };
-
             var oldToken = await _repository.RefreshTokens.Get(credentials.player_id);
 
             if (oldToken != null)
@@ -109,7 +106,36 @@ namespace Service
 
             await _repository.SaveAsync();
 
-            return tokens;
+            return new LoginTokensDto()
+            {
+                access = _tokenService.CreateAccessToken(credentials.player_id),
+                refresh = refreshToken.Token,
+            };
+        }
+
+        public async Task<LoginTokensDto> Refresh(string refreshToken)
+        {
+            var oldToken = await _repository.RefreshTokens.FindByCondition(data => data.refresh_token == refreshToken).FirstOrDefaultAsync();
+
+            if (oldToken == null)
+                return null;
+
+            if (DateTime.UtcNow > oldToken.expires_at)
+                return null;
+
+            var newRefreshToken = _tokenService.CreateRefreshToken();
+
+            oldToken.refresh_token = newRefreshToken.Token;
+            oldToken.expires_at = newRefreshToken.ExpiresAt;
+            _repository.RefreshTokens.Update(oldToken);
+
+            await _repository.SaveAsync();
+
+            return new LoginTokensDto()
+            {
+                access = _tokenService.CreateAccessToken(oldToken.player_id),
+                refresh = newRefreshToken.Token,
+            };
         }
     }
 }

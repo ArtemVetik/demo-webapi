@@ -44,5 +44,16 @@ namespace DemoWebApi.Controllers
 
             return Ok(loginTokens);
         }
+
+        [HttpPost("refresh")]
+        public async Task<ActionResult<LoginTokensDto>> Login([FromBody] string refreshToken)
+        {
+            var loginTokens = await _service.Refresh(refreshToken);
+
+            if (loginTokens == null)
+                return BadRequest("Invalid token");
+
+            return Ok(loginTokens);
+        }
     }
 }
