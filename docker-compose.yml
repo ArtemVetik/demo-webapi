@@ -1,0 +1,36 @@
+networks:
+  demo-network:
+    driver: bridge
+
+services:
+  app: 
+    container_name: demo-webapi
+    build:
+      context: DemoWebApi
+      dockerfile: Dockerfile
+    ports:
+      - "24:8080"
+    environment:
+      - DOTNET_ENVIRONMENT=Development
+    networks:
+      - demo-network
+    volumes:
+      - ./docker/logs:/app/logs
+    depends_on:
+      - postgres_db
+
+  postgres_db:
+    container_name: postgres
+    image: postgres:latest
+    environment:
+      PGUSER: agava
+      POSTGRES_USER: agava
+      POSTGRES_PASSWORD: somestrongpassword
+      POSTGRES_DB: demo-webapi
+      PGDATA: /var/lib/postgresql/data/dbcase/
+    ports:
+      - "5432:5432"
+    networks:
+      - demo-network
+    volumes:
+      - ./docker/bd:/var/lib/postgresql/data
