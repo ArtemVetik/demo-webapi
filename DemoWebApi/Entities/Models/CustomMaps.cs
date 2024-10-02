@@ -23,6 +23,6 @@ namespace Entities.Models
 
         public string? description { get; set; }
 
-        public PlayerProfiles PlayerProfile { get; set; }
+        public virtual PlayerProfiles PlayerProfile { get; set; }
     }
 }

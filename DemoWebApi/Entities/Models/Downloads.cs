@@ -16,8 +16,8 @@ namespace Entities.Models
         [ForeignKey(nameof(CustomMap))]
         public string map_id { get; set; }
 
-        public PlayerProfiles PlayerProfile { get; set; }
+        public virtual PlayerProfiles PlayerProfile { get; set; }
 
-        public CustomMaps CustomMap { get; set; }
+        public virtual CustomMaps CustomMap { get; set; }
     }
 }

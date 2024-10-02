@@ -23,6 +23,6 @@ namespace Entities.Models
         [Column(TypeName = "timestamptz")]
         public DateTime created_at { get; set; }
 
-        public PlayerCredentials PlayerCredential { get; set; }
+        public virtual PlayerCredentials PlayerCredential { get; set; }
     }
 }

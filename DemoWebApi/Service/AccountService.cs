@@ -2,8 +2,6 @@
 using Entities.Dto;
 using Entities.Models;
 using Microsoft.EntityFrameworkCore;
-using System.Linq;
-using System.Net;
 
 namespace Service
 {
