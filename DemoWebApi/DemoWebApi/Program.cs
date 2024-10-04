@@ -1,4 +1,5 @@
 using DemoWebApi.Extentions;
+using DemoWebApi.Filters;
 using Service;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -13,6 +14,8 @@ builder.Services.AddJwtAuthentication(builder.Configuration);
 builder.Services.AddTransient<JwtTokenService>();
 builder.Services.AddScoped<AccountService>();
 builder.Services.AddScoped<ProfileService>();
+builder.Services.AddScoped<MapService>();
+builder.Services.AddScoped<SubscriptionFilter>();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using DemoWebApi.Extentions;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Service;
 
@@ -19,12 +20,12 @@ namespace DemoWebApi.Controllers
         [HttpGet]
         public async Task<IActionResult> GetProfile()
         {
-            var playerId = User.FindFirst("id");
+            var playerId = User.GetUserId();
 
-            if (playerId == null)
-                return BadRequest("User not found");
+            if (string.IsNullOrEmpty(playerId))
+                return Unauthorized();
 
-            var profileDto = await _service.GetProfile(playerId.Value);
+            var profileDto = await _service.GetProfile(playerId);
 
             if (profileDto == null)
                 return BadRequest("User not found");
