@@ -19,17 +19,24 @@ namespace Service
 
         public async Task SendConfirmCode(string email)
         {
-            var data = new ConfirmRegistrationCodes()
-            {
-                email = email,
-                code = ConfirmCodeFactory.CreateNew(),
-                expire_at = DateTime.UtcNow.AddMinutes(15)
-            };
+            var data = await _repository.ConfirmRegistrationCodes.FindByCondition(data => data.email == email).FirstOrDefaultAsync();
 
-            if (await _repository.ConfirmRegistrationCodes.Has(email))
+            if (data != null)
+            {
+                data.code = ConfirmCodeFactory.CreateNew();
+                data.expire_at = DateTime.UtcNow.AddMinutes(15);
+
                 _repository.ConfirmRegistrationCodes.Update(data);
+            }
             else
-                await _repository.ConfirmRegistrationCodes.CreateAsync(data);
+            {
+                await _repository.ConfirmRegistrationCodes.CreateAsync(new ConfirmRegistrationCodes()
+                {
+                    email = email,
+                    code = ConfirmCodeFactory.CreateNew(),
+                    expire_at = DateTime.UtcNow.AddMinutes(15)
+                });
+            }
 
             await _repository.SaveAsync();
 
