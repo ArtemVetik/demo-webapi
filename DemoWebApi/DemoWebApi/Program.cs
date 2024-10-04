@@ -1,9 +1,11 @@
 using DemoWebApi.Extentions;
 using DemoWebApi.Filters;
 using Service;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddSerilog(builder.Logging, builder.Environment);
 builder.Services.AddControllers();
 builder.Services.ConfigureCors();
 builder.Services.ConfigureSwager();

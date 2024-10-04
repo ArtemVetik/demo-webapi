@@ -2,6 +2,7 @@
 using Entities.Dto;
 using Entities.Models;
 using Microsoft.EntityFrameworkCore;
+using Serilog;
 
 namespace Service
 {
@@ -34,6 +35,8 @@ namespace Service
 
             // Send code to email
             // ...
+
+            Log.Information($"Confirmation code has been sent to {email}");
         }
 
         public async Task<bool> ConsumeConfirmationCode(string email, string code)

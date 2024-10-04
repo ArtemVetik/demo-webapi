@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Repository;
+using Serilog;
 using Service;
 using System.Text;
 
@@ -12,6 +13,25 @@ namespace DemoWebApi.Extentions
 {
     public static class ServiceExtensions
     {
+        public static void AddSerilog(this IServiceCollection services, ILoggingBuilder loggingBuilder, IWebHostEnvironment environment)
+        {
+            Log.Logger = new LoggerConfiguration()
+                .WriteTo.File("logs/log-.txt", rollingInterval: RollingInterval.Day)
+                .MinimumLevel.Is(environment.IsProduction() ? Serilog.Events.LogEventLevel.Information : Serilog.Events.LogEventLevel.Debug)
+                .CreateLogger();
+
+            loggingBuilder.ClearProviders();
+
+            if (environment.IsProduction() == false)
+            {
+                loggingBuilder.AddSerilog();
+                services.AddHttpLogging(o =>
+                {
+                    o.LoggingFields = Microsoft.AspNetCore.HttpLogging.HttpLoggingFields.All;
+                });
+            }
+        }
+
         public static void ConfigureSwager(this IServiceCollection services)
         {
             services.AddSwaggerGen(c =>
