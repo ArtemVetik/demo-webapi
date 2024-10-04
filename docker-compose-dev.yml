@@ -3,8 +3,8 @@ networks:
     driver: bridge
 
 services:
-  app: 
-    container_name: demo-webapi
+  app_dev: 
+    container_name: demo-webapi-dev
     build:
       context: DemoWebApi
       dockerfile: Dockerfile
@@ -19,8 +19,8 @@ services:
     depends_on:
       - postgres_db
 
-  postgres_db:
-    container_name: postgres
+  postgres_db_dev:
+    container_name: postgres-dev
     image: postgres:latest
     environment:
       PGUSER: agava
