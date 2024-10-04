@@ -23,13 +23,12 @@ builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
+app.ConfigureExceptionHandler();
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI(c =>
-    {
-        c.SwaggerEndpoint("/swagger/v1/swagger.json", "Demi API V1");
-    });
+    app.ConfigureSwaggerUI();
 }
 
 app.UseHttpsRedirection();
