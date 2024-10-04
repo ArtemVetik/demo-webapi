@@ -16,8 +16,18 @@ namespace DemoWebApi.Controllers
             _service = service;
         }
 
+        /// <summary>
+        /// Returns profile data.
+        /// </summary>
+        /// <returns>Profile data</returns>
+        /// <response code="200">Returns profile data</response>
+        /// <response code="400">If user profile not found</response>
+        /// <response code="401">If authorization error</response>
         [Authorize]
         [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public async Task<IActionResult> GetProfile()
         {
             var playerId = User.GetUserId();
