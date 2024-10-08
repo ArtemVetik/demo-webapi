@@ -1,6 +1,7 @@
 ﻿using Entities;
 using Entities.Models;
 using Contracts;
+using Microsoft.EntityFrameworkCore;
 
 namespace Repository
 {
@@ -10,6 +11,14 @@ namespace Repository
             : base(repositoryContext)
         {
 
+        }
+
+        public async Task<Subscriptions> GetWithProfile(string playerId)
+        {
+            return await RepositoryContext.Subscriptions
+                .Include(p => p.PlayerProfile)
+                .ThenInclude(c => c.PlayerCredential)
+                .FirstOrDefaultAsync(data => data.player_id == playerId);
         }
     }
 }

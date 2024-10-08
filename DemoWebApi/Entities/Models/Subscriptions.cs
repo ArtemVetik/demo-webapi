@@ -16,6 +16,6 @@ namespace Entities.Models
         [Column(TypeName = "timestamptz")]
         public DateTime expires_at { get; set; }
 
-        public virtual PlayerProfiles PlayerProfile { get; set; }
+        public PlayerProfiles PlayerProfile { get; set; }
     }
 }

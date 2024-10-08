@@ -1,6 +1,7 @@
 ﻿using Entities;
 using Entities.Models;
 using Contracts;
+using Microsoft.EntityFrameworkCore;
 
 namespace Repository
 {
@@ -10,6 +11,13 @@ namespace Repository
             : base(repositoryContext)
         {
 
+        }
+
+        public async Task<PlayerProfiles> GetWithCredentials(string playerId)
+        {
+            return await RepositoryContext.PlayerProfiles
+                .Include(c => c.PlayerCredential)
+                .FirstOrDefaultAsync(data => data.player_id == playerId);
         }
     }
 }

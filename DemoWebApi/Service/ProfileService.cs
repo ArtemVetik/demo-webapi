@@ -17,10 +17,10 @@ namespace Service
         public async Task<PlayerProfileDto> GetProfile(string playerId)
         {
             PlayerProfiles profile = null;
-            Subscriptions subscription = await _repository.Subscriptions.FindByCondition(data => data.player_id == playerId).FirstOrDefaultAsync();
+            Subscriptions subscription = await _repository.Subscriptions.GetWithProfile(playerId);
 
             if (subscription == null)
-                profile = await _repository.PlayerProfiles.FindByCondition(data => data.player_id == playerId).FirstOrDefaultAsync();
+                profile = await _repository.PlayerProfiles.GetWithCredentials(playerId);
             else
                 profile = subscription.PlayerProfile;
 

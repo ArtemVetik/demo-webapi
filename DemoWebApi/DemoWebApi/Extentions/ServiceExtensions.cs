@@ -54,7 +54,7 @@ namespace DemoWebApi.Extentions
         public static void ConfigurePostgreSqlContext(this IServiceCollection services, IConfiguration config)
         {
             var connectionString = config["PostgresqlConnection:ConnectionString"];
-            services.AddDbContext<RepositoryContext>(options => options.UseLazyLoadingProxies().UseNpgsql(connectionString));
+            services.AddDbContext<RepositoryContext>(options => options.UseNpgsql(connectionString));
         }
 
         public static void ConfigureRepositoryWrapper(this IServiceCollection services)
