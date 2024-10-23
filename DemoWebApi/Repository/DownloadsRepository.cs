@@ -15,6 +15,9 @@ namespace Repository
 
         public async Task AddOrUpdate(string playerId, string mapId)
         {
+            if (RepositoryContext.Downloads == null)
+                return;
+
             var hasDownload = await RepositoryContext.Downloads.AnyAsync(data => data.player_id == playerId && data.map_id == mapId);
 
             if (hasDownload)

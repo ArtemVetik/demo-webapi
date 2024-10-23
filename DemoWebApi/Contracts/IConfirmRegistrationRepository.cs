@@ -4,6 +4,6 @@ namespace Contracts
 {
     public interface IConfirmRegistrationRepository : IRepositoryBase<ConfirmRegistrationCodes>
     {
-        Task<ConfirmRegistrationCodes> Get(string email, string code);
+        Task<ConfirmRegistrationCodes?> Get(string email, string code);
     }
 }

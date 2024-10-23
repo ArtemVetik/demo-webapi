@@ -13,8 +13,11 @@ namespace Repository
 
         }
 
-        public async Task<PlayerProfiles> GetWithCredentials(string playerId)
+        public async Task<PlayerProfiles?> GetWithCredentials(string playerId)
         {
+            if (RepositoryContext.PlayerProfiles == null)
+                return null;
+
             return await RepositoryContext.PlayerProfiles
                 .Include(c => c.PlayerCredential)
                 .FirstOrDefaultAsync(data => data.player_id == playerId);

@@ -4,6 +4,6 @@ namespace Contracts
 {
     public interface ISubscriptionsRepository : IRepositoryBase<Subscriptions>
     {
-        Task<Subscriptions> GetWithProfile(string playerId);
+        Task<Subscriptions?> GetWithProfile(string playerId);
     }
 }

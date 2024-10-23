@@ -13,8 +13,11 @@ namespace Repository
 
         }
 
-        public async Task<RefreshTokens> Get(string playerId)
+        public async Task<RefreshTokens?> Get(string playerId)
         {
+            if (RepositoryContext.RefreshTokens == null)
+                return null;
+
             return await RepositoryContext.RefreshTokens.FirstOrDefaultAsync(data => data.player_id == playerId);
         }
     }

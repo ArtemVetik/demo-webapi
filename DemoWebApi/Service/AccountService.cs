@@ -8,8 +8,8 @@ namespace Service
 {
     public class AccountService
     {
-        private IRepositoryWrapper _repository;
-        private JwtTokenService _tokenService;
+        private readonly IRepositoryWrapper _repository;
+        private readonly JwtTokenService _tokenService;
 
         public AccountService(IRepositoryWrapper repository, JwtTokenService tokenService)
         {
@@ -61,7 +61,7 @@ namespace Service
 
         public async Task<bool> Registration(RegistrationDto registrationData)
         {
-            if (await _repository.PlayerCredentials.Has(registrationData.email))
+            if (await _repository.PlayerCredentials.Has(registrationData.email) ?? throw new Exception("Player Credentials not found"))
                 return false;
 
             var playerId = Guid.NewGuid().ToString();
@@ -85,7 +85,7 @@ namespace Service
             return true;
         }
 
-        public async Task<LoginTokensDto> Login(LoginCredentialsDto loginData)
+        public async Task<LoginTokensDto?> Login(LoginCredentialsDto loginData)
         {
             var credentials = await _repository.PlayerCredentials.Get(loginData.email, loginData.password);
 
@@ -121,7 +121,7 @@ namespace Service
             };
         }
 
-        public async Task<LoginTokensDto> Refresh(string refreshToken)
+        public async Task<LoginTokensDto?> Refresh(string refreshToken)
         {
             var oldToken = await _repository.RefreshTokens.FindByCondition(data => data.refresh_token == refreshToken).FirstOrDefaultAsync();
 

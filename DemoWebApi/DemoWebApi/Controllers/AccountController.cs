@@ -82,7 +82,7 @@ namespace DemoWebApi.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [Produces("application/json")]
-        public async Task<ActionResult<LoginTokensDto>> Login([FromBody] string refreshToken)
+        public async Task<ActionResult<LoginTokensDto>> Refresh([FromBody] string refreshToken)
         {
             var loginTokens = await _service.Refresh(refreshToken);
 

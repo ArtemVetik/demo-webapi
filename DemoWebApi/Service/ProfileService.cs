@@ -1,24 +1,23 @@
 ﻿using Contracts;
 using Entities.Dto;
 using Entities.Models;
-using Microsoft.EntityFrameworkCore;
 
 namespace Service
 {
     public class ProfileService
     {
-        private IRepositoryWrapper _repository;
+        private readonly IRepositoryWrapper _repository;
 
         public ProfileService(IRepositoryWrapper repository)
         {
             _repository = repository;
         }
 
-        public async Task<PlayerProfileDto> GetProfile(string playerId)
+        public async Task<PlayerProfileDto?> GetProfile(string playerId)
         {
-            PlayerProfiles profile = null;
-            Subscriptions subscription = await _repository.Subscriptions.GetWithProfile(playerId);
+            Subscriptions? subscription = await _repository.Subscriptions.GetWithProfile(playerId);
 
+            PlayerProfiles? profile;
             if (subscription == null)
                 profile = await _repository.PlayerProfiles.GetWithCredentials(playerId);
             else

@@ -13,13 +13,19 @@ namespace Repository
 
         }
 
-        public async Task<bool> Has(string email)
+        public async Task<bool?> Has(string email)
         {
+            if (RepositoryContext.PlayerCredentials == null)
+                return null;
+
             return await RepositoryContext.PlayerCredentials.FirstOrDefaultAsync(data => data.email == email) != null;
         }
 
-        public async Task<PlayerCredentials> Get(string email, string password)
+        public async Task<PlayerCredentials?> Get(string email, string password)
         {
+            if (RepositoryContext.PlayerCredentials == null)
+                return null;
+
             return await RepositoryContext.PlayerCredentials.FirstOrDefaultAsync(data => data.email == email && data.password == password);
         }
     }

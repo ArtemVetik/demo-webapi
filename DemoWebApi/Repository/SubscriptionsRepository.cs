@@ -13,8 +13,11 @@ namespace Repository
 
         }
 
-        public async Task<Subscriptions> GetWithProfile(string playerId)
+        public async Task<Subscriptions?> GetWithProfile(string playerId)
         {
+            if (RepositoryContext.Subscriptions == null)
+                return null;
+
             return await RepositoryContext.Subscriptions
                 .Include(p => p.PlayerProfile)
                 .ThenInclude(c => c.PlayerCredential)

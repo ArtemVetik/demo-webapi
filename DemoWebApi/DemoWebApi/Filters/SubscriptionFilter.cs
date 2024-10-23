@@ -28,7 +28,7 @@ namespace DemoWebApi.Filters
 
             if (subscription == null || DateTime.UtcNow > subscription.expires_at)
             {
-                context.Result = new BadRequestResult();
+                context.Result = new BadRequestObjectResult("The user does not have a subscription");
                 return;
             }
 

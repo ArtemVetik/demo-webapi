@@ -6,7 +6,7 @@ namespace Service
 {
     public class MapService
     {
-        private IRepositoryWrapper _repository;
+        private readonly IRepositoryWrapper _repository;
 
         public MapService(IRepositoryWrapper repository)
         {
@@ -32,7 +32,7 @@ namespace Service
             return result;
         }
 
-        public async Task<string> DownloadMap(string playerId, string mapId)
+        public async Task<string?> DownloadMap(string playerId, string mapId)
         {
             var map = await _repository.CustomMaps.FindByCondition(data => data.map_id == mapId).FirstOrDefaultAsync();
 
