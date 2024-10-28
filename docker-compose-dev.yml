@@ -34,3 +34,4 @@ services:
       - demo-network
     volumes:
       - ./docker/bd:/var/lib/postgresql/data
+      - ./docker/logs:/var/lib/postgresql/data/dbcase/log
