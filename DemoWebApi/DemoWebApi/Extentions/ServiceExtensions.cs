@@ -7,6 +7,7 @@ using Microsoft.OpenApi.Models;
 using Repository;
 using Serilog;
 using Service;
+using System.Reflection;
 using System.Text;
 
 namespace DemoWebApi.Extentions
@@ -36,7 +37,17 @@ namespace DemoWebApi.Extentions
         {
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Demo API - V1", Version = "v1" });
+                c.SwaggerDoc("v1.1",
+                    new OpenApiInfo
+                    {
+                        Title = "Demo API - V1",
+                        Version = "v1.1"
+                    }
+                 );
+
+                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+                c.IncludeXmlComments(xmlPath);
             });
         }
 

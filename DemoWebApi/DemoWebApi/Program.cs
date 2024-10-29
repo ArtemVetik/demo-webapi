@@ -7,8 +7,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddSerilog(builder.Logging, builder.Environment);
 builder.Services.AddControllers();
-builder.Services.ConfigureCors();
 builder.Services.ConfigureSwager();
+builder.Services.ConfigureCors();
 builder.Services.ConfigureJwtConfig(builder.Configuration);
 builder.Services.ConfigurePostgreSqlContext(builder.Configuration);
 builder.Services.ConfigureRepositoryWrapper();
@@ -19,7 +19,6 @@ builder.Services.AddScoped<ProfileService>();
 builder.Services.AddScoped<MapService>();
 builder.Services.AddScoped<SubscriptionFilter>();
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
@@ -27,8 +26,7 @@ app.ConfigureExceptionHandler();
 
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger();
-    app.ConfigureSwaggerUI();
+    app.ConfigureSwagger();
 }
 
 app.UseHttpsRedirection();

@@ -28,11 +28,12 @@ namespace DemoWebApi.Extentions
             });
         }
 
-        public static void ConfigureSwaggerUI(this IApplicationBuilder app)
+        public static void ConfigureSwagger(this IApplicationBuilder app)
         {
+            app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Demi API V1");
+                c.SwaggerEndpoint("/swagger/v1.1/swagger.json", "Demo Web API V1.1");
             });
         }
     }
