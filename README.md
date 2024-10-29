@@ -19,7 +19,7 @@ This demo serves as an foundation for developers creating maintainable and produ
 
 ## Documentation
 
-For an in-depth guide on each of these topics, see the [detailed documentation](https://agava.kaiten.ru/documents/g/d772877a-0bb5-48da-a046-fee7ee79f80b). This external guide also covers:
+For an in-depth guide on each of these topics, see the [detailed documentation](https://csharp-webapi-practices.kaiten.site/). This external guide also covers:
 
 * Advanced database management (database models and best practices).
 * VPS setup (Docker installation and configuration, nginx setup for HTTPS).
